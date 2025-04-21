@@ -1,49 +1,64 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: stetrel <stetrel@42angouleme.fr>           +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/24 11:00:14 by stetrel           #+#    #+#              #
-#    Updated: 2024/12/24 11:22:37 by stetrel          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+#------------------------------------------------------------------------------#
+#																			   #
+#------------------------------------------------------------------------------#
 
-NAME	:= ft_strlen
+NAME		:=	libasm.a
 
-SRC		:= ft_strlen_asm.s
+NASM		:=	nasm -f
 
-OBJ		:= ft_strlen.o
+NASMFLAGS	:=	elf64
 
-CC		:= nasm
+SRCS_DIR	:=	srcs
 
-FLAGS	:= -f elf64 -g -F dwarf
+OBJS_DIR	:=	.build
 
-LINK	:= ld -o
+SRCS		:=	strlen.s	\
+				strcpy.s 	\
+				strcmp.s 	\
+				strdup.s	\
 
-MAKEFLAGS	+= --no-print-directory
+SRCS		:=	$(addprefix $(SRCS_DIR)/, $(SRCS))
 
-#RULES
+OBJS		:=	$(addprefix $(OBJS_DIR)/, $(SRCS:%.s=%.o))
+
+DIR_UP		=	mkdir -p $(@D)
+
+RM			:=	rm -rf
+
+#------------------------------------------------------------------------------#
+
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@$(LINK) $(NAME) $(OBJ)
-	@echo "$(GREEN)$(NAME) Compiled"
+$(NAME): $(OBJS)
+	@ar rc $(NAME) $^
 
-$(OBJ): $(SRC)
-	@$(CC) $(FLAGS) $(SRC) -o $(OBJ)
+$(OBJS_DIR)/%.o: %.s
+	@$(DIR_UP)
+	@$(NASM) $(NASMFLAGS) $^ -o $@
 
 clean:
-	@$(RM) $(OBJ)
+	@$(RM) $(OBJS_DIR)
 
 fclean: clean
 	@$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+#------------------------------------------------------------------------------#
 
-#COLORS
-GREEN = \033[30;45m
+BLACK		=	\033[30m
+RED			=	\033[31m
+GREEN		=	\033[32m
+YELLOW		=	\033[33m
+BLUE		=	\033[34m
+MAGENTA		=	\033[35m
+CYAN		=	\033[36m
+WHITE		=	\033[37m
+GRAY		=	\033[90m
+
+BOLD		=	\033[1m
+ITALIC		=	\033[3m
+
+RESET		=	\033[0m
+LINE_CLR	=	\33[2K\r
 
