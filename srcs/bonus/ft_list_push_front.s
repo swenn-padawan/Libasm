@@ -12,7 +12,7 @@ ft_create_elem:
 	je		.end
 	mov		rdi, [rbp - 8]
 	mov		[rax], rdi
-	mov		[rax+8], 0
+	mov		qword [rax + 8], 0
 .end:
 	add		rsp, 16
 	pop		rbp
@@ -28,7 +28,7 @@ ft_list_push_front:
 	push	rdi		; rbp - 8
 	push	rsi		; rbp - 16
 	
-	cmp		[rbp - 8], 0	; if (!head) goto end
+	cmp		qword [rbp - 8], 0	; if (!head) goto end
 	je		.end
 
 	mov		rdi, [rbp - 16]		; node = ft_create_elem(data)
@@ -38,7 +38,7 @@ ft_list_push_front:
 
 	mov		rdi, [rbp - 8]		
 	mov		rdi, [rdi]
-	mov		[rax + 8], rdi		; node->next = *head
+	mov		qword [rax + 8], rdi		; node->next = *head
 	mov		rdi, [rbp - 8]
 	mov		[rdi], rax			; *head = node
 .end:
