@@ -2,7 +2,7 @@
 #																			   #
 #------------------------------------------------------------------------------#
 
-NAME		:=	libasm.a
+LIBNAME		:=	libasm.a
 
 NASM		:=	nasm -f
 
@@ -12,10 +12,12 @@ SRCS_DIR	:=	srcs
 
 OBJS_DIR	:=	.build
 
-SRCS		:=	strlen.s	\
-				strcpy.s 	\
-				strcmp.s 	\
-				strdup.s	\
+SRCS		:=	ft_strlen.s		\
+				ft_strcpy.s 	\
+				ft_strcmp.s 	\
+				ft_strdup.s		\
+				ft_read.s 		\
+				ft_write.s 		\
 
 SRCS		:=	$(addprefix $(SRCS_DIR)/, $(SRCS))
 
@@ -27,20 +29,43 @@ RM			:=	rm -rf
 
 #------------------------------------------------------------------------------#
 
-all: $(NAME)
+CC			:= cc
 
-$(NAME): $(OBJS)
-	@ar rc $(NAME) $^
+NAME		:= libtester
+
+TEST_SRC	:= libtest.c \
+
+TEST_OBJS	:= $(addprefix $(OBJS_DIR),/ $(TEST_SRCS:%.o=%.s))
+
+CFLAGS		:= -Wall -Werror -Wextra -lbsd
+
+IFLAGS		:= -I ./include
+
+#------------------------------------------------------------------------------#
+
+all: $(LIBNAME)
+
+$(LIBNAME): $(OBJS)
+	@ar rc $(LIBNAME) $^
+	@echo " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  building	$(GREEN)$(BOLD)$(ITALIC)$(LIBNAME)$(RESET)"
 
 $(OBJS_DIR)/%.o: %.s
 	@$(DIR_UP)
 	@$(NASM) $(NASMFLAGS) $^ -o $@
+	@echo " $(CYAN)$(BOLD)$(ITALIC)■$(RESET)  compiling	$(GRAY)$(BOLD)$(ITALIC)$<$(RESET)"
+
+tester: all
+	@$(CC) $(CFLAGS) $(IFLAGS) $(TEST_SRC) $(LIBNAME) -o $(NAME)
+	@echo " $(CYAN)$(BOLD)$(ITALIC)■$(RESET)  compiling	$(GRAY)$(BOLD)$(ITALIC)$(NAME)$(RESET)"
 
 clean:
 	@$(RM) $(OBJS_DIR)
+	@echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  cleaned	$(RED)$(BOLD)$(ITALIC)$(OBJS_DIR)$(RESET)"
 
 fclean: clean
+	@$(RM) $(LIBNAME)
 	@$(RM) $(NAME)
+	@echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  cleaned	$(RED)$(BOLD)$(ITALIC)$(LIBNAME)$(RESET)"
 
 re: fclean all
 
