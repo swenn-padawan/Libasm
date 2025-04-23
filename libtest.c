@@ -11,6 +11,7 @@ ssize_t ft_write(int fd, const void *buf, size_t count);
 ssize_t ft_read(int fd, void *buf, size_t count);
 char    *ft_strdup(const char *s);
 
+
 #define GREEN   "\x1b[32m"
 #define RED     "\x1b[31m"
 #define RESET   "\x1b[0m"

@@ -33,6 +33,7 @@ RM			:=	rm -rf
 BONUS_DIR	:= $(SRCS_DIR)/bonus
 
 SRCS_BONUS	:=	ft_list_push_front.s	\
+				ft_list_size.s			\
 
 SRCS_BONUS	:=	$(addprefix $(BONUS_DIR)/, $(SRCS_BONUS))
 
