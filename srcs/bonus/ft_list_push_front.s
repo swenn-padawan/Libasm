@@ -7,7 +7,7 @@ ft_create_elem:
 	sub		rsp, 16
 	mov		[rbp - 8], rdi
 	mov		rdi, 16
-	call	malloc
+	call	malloc WRT ..plt
 	test	rax, rax
 	je		.end
 	mov		rdi, [rbp - 8]

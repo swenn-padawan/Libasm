@@ -7,10 +7,10 @@ ft_list_size:
 
 	xor		rax, rax		;inialise rax
 .loop:
-	cmp		qword [rdi], 0  ; verifie si le node est NULL (fin)
+	cmp		rdi, 0  ; verifie si le node est NULL (fin)
 	je		.end			; si c'est le cas on ret
 	inc		rax				; increment
-	add		rdi, 16			; deplace au prochain node (ca marche pas)
+	mov		rdi, [rdi + 8]							; avancer le ptr
 	jmp		.loop			; recommence
 
 .end:
