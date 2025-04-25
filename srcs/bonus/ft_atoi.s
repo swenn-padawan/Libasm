@@ -5,6 +5,15 @@
 ;rdi = str
 ;int a mettre dans rax
 
+.isdigit:
+	cmp		byte[rdi], 0
+	je		.end
+	cmp		byte[rdi], '0'
+	jl		.error
+	cmp		byte[rdi], '9'
+	jg		.error
+	jmp		.mainloop
+
 global ft_atoi
 ft_atoi:
 	push	rbp
@@ -16,19 +25,37 @@ ft_atoi:
 	inc		rdi
 	jmp		.spaceloop ; pas de else...
 .signloop:
-	cmp		byte[rdi], 45 ; '-'
+	cmp		byte[rdi], 0
+	je		.end
+	cmp		byte[rdi], '-' ;45
 	je		.signcnt
-	cmp		byte[rdi], 43 ; '+'
-	incr	rdi
-	jmp		.signloop ; same...
-.mainloop:
-	
-
-
+	cmp		byte[rdi], '+' ;43
+	je		.plusskip
+.mainloop: ; a ce stade je suis sur le nombre
+	jmp		.isdigit
+	mov		rsi, rax
+	mov		al, byte[rdi]
+	mul		al, 10
+	mov		ebx, byte[rdi + 1]
+	sub		ebx, '0' ;32
+	add		rax, ebx
+	jmp		.mainloop
+.convert:
+	and		rsi, 1
+	je		.end
+	mul		rax, -1
+	.end
 	pop		rbp
-
-.end
 	ret
 
+.error:
+	xor		rax, rax
+	ret
+.plusskip:
+	inc	rdi
+	jmp		.signloop
 .signcnt:
-	incr	rax
+	inc		rax
+	inc		rdi
+	jmp		.signloop
+

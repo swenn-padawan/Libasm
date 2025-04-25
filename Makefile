@@ -34,6 +34,7 @@ BONUS_DIR	:= $(SRCS_DIR)/bonus
 
 SRCS_BONUS	:=	ft_list_push_front.s	\
 				ft_list_size.s			\
+				ft_atoi.s				\
 
 SRCS_BONUS	:=	$(addprefix $(BONUS_DIR)/, $(SRCS_BONUS))
 
@@ -60,7 +61,7 @@ all: $(LIBNAME)
 
 $(LIBNAME): $(OBJS)
 	@ar rc $(LIBNAME) $^
-	@echo " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  building	$(GREEN)$(BOLD)$(ITALIC)$(LIBNAME)$(RESET)"
+	@printf " $(GREEN)$(BOLD)$(ITALIC)■$(RESET)  building	$(GREEN)$(BOLD)$(ITALIC)$(LIBNAME)$(RESET)\n"
 
 bonus: $(OBJS) $(OBJS_BONUS)
 	@ar rc $(LIBNAME) $^
@@ -68,20 +69,20 @@ bonus: $(OBJS) $(OBJS_BONUS)
 $(OBJS_DIR)/%.o: %.s
 	@$(DIR_UP)
 	@$(NASM) $(NASMFLAGS) $^ -o $@
-	@echo " $(CYAN)$(BOLD)$(ITALIC)■$(RESET)  compiling	$(GRAY)$(BOLD)$(ITALIC)$<$(RESET)"
+	@printf " $(CYAN)$(BOLD)$(ITALIC)■$(RESET)  compiling	$(GRAY)$(BOLD)$(ITALIC)$<$(RESET)\n"
 
 tester: all bonus
 	@$(CC) $(CFLAGS) $(IFLAGS) $(TEST_SRC) $(LIBNAME) -o $(NAME)
-	@echo " $(CYAN)$(BOLD)$(ITALIC)■$(RESET)  compiling	$(GRAY)$(BOLD)$(ITALIC)$(NAME)$(RESET)"
+	@printf " $(CYAN)$(BOLD)$(ITALIC)■$(RESET)  compiling	$(GRAY)$(BOLD)$(ITALIC)$(NAME)$(RESET)\n"
 
 clean:
 	@$(RM) $(OBJS_DIR)
-	@echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  cleaned	$(RED)$(BOLD)$(ITALIC)$(OBJS_DIR)$(RESET)"
+	@printf " $(RED)$(BOLD)$(ITALIC)■$(RESET)  cleaned	$(RED)$(BOLD)$(ITALIC)$(OBJS_DIR)$(RESET)\n"
 
 fclean: clean
 	@$(RM) $(LIBNAME)
 	@$(RM) $(NAME)
-	@echo " $(RED)$(BOLD)$(ITALIC)■$(RESET)  cleaned	$(RED)$(BOLD)$(ITALIC)$(LIBNAME)$(RESET)"
+	@printf " $(RED)$(BOLD)$(ITALIC)■$(RESET)  cleaned	$(RED)$(BOLD)$(ITALIC)$(LIBNAME)$(RESET)\n"
 
 re: fclean all
 
