@@ -48,10 +48,11 @@ CC			:= cc
 NAME		:= libtester
 
 TEST_SRC	:= tester/libtest.c \
+			   tester/utils.c \
 
 TEST_OBJS	:= $(addprefix $(OBJS_DIR),/ $(TEST_SRCS:%.o=%.s))
 
-CFLAGS		:= -Wall -Werror -Wextra #-lbsd
+CFLAGS		:= -Wall -Werror -Wextra -g#-lbsd
 
 #------------------------------------------------------------------------------#
 

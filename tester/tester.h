@@ -8,6 +8,7 @@
 #include <time.h>
 
 #define MAX_TESTS 100
+#define MAX_SIZE 100
 
 # define	BOLD(X)				"\033[1m" X "\033[22m"
 # define 	ITALIC(X)			"\033[3m" X "\033[23m"
@@ -25,9 +26,14 @@
 # define TEST_OK(msg, ...)			_PRINT_FORMAT(GREEN,	    "OK:", msg, ##__VA_ARGS__)
 # define TEST_KO(msg, ...)			_PRINT_FORMAT(RED,	    "KO:", msg, ##__VA_ARGS__)
 
+/*--------libasm functions--------*/
+
 size_t  ft_strlen(const char *s);
 char    *ft_strcpy(char *dst, const char *src);
 int     ft_strcmp(const char *s1, const char *s2);
 ssize_t	ft_write(int fd, const void *buf, size_t count);
 ssize_t ft_read(int fd, void *buf, size_t count);
 char    *ft_strdup(const char *s);
+
+/*--------tester functions--------*/
+char	*generate_string(size_t size);
